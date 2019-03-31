@@ -66,6 +66,17 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(test,reference)
     }
     
+    func testCustomAttributes() {
+        
+        let test = "<b>Hello World</b>!!!".style(tags: Style("b").custom(1, forAttributedKey: .verticalGlyphForm)).attributedString
+        
+        let reference = NSMutableAttributedString(string: "Hello World!!!")
+        reference.addAttribute(.verticalGlyphForm, value: 1, range: NSMakeRange(0, 11))
+        
+        XCTAssertEqual(test,reference)
+
+    }
+    
     func testLines() {
         
         let test = "<b>Hello\nWorld</b>!!!".style(tags: Style("b").font(.boldSystemFont(ofSize: 45)))
@@ -471,7 +482,9 @@ class AtributikaTests: XCTestCase {
         XCTAssertEqual(">".detectTags().string, ">")
         XCTAssertEqual("<a".detectTags().string, "<a")
         XCTAssertEqual("<a>".detectTags().string, "")
-        XCTAssertEqual("< a>".detectTags().string, "< a>")
+        XCTAssertEqual("< a>".detectTags().string, "< a>")        
+        XCTAssertEqual("&frasl;".detectTags().string, "⁄")
+        XCTAssertEqual("&raquo;".detectTags().string, "»")
     }
     
     func testSpecialCodes() {
